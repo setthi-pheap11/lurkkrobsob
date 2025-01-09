@@ -31,9 +31,7 @@ class GoogleLoginController extends Controller
             $googleResponse = Http::get($googleValidationUrl);
 
             if ($googleResponse->failed()) {
-                return response()->json([
-                    'error' => 'Invalid Google access token provided',
-                ], 400);
+                return $this->sendErrorResponse('Invalid Google access token provided', 400);
             }
 
             $googleUserData = $googleResponse->json();
@@ -58,9 +56,7 @@ class GoogleLoginController extends Controller
                 $token = $existingUser->createToken('GoogleLoginToken')->plainTextToken;
 
                 // Return success response with token
-                return $this->sendResponse([
-                    'token' => $token
-                ], 200, 'Login successful', 'ok');
+                return $this->sendSuccessResponse('Login successful', 'ok', $token);
             } else {
                 // Create a new user with data retrieved from Google
                 $newUser = User::create([
@@ -80,33 +76,53 @@ class GoogleLoginController extends Controller
                 $token = $newUser->createToken('GoogleLoginToken')->plainTextToken;
 
                 // Return success response with token
-                return $this->sendResponse([
-                    'token' => $token
-                ], 200, 'User created and login successful', 'ok');
+                return $this->sendSuccessResponse('Create Login successful', 'ok', $token);
             }
         } catch (Exception $e) {
-            return response()->json([
-                'error' => 'Unable to login using Google. Please try again.',
-                'details' => $e->getMessage(),
-            ], 500);
+            return $this->sendErrorResponse('Unable to login using Google. Please try again.', 500, $e->getMessage());
         }
     }
 
     /**
-     * Format the response structure.
+     * Format the success response structure.
      *
-     * @param mixed $data
-     * @param int $statusCode
      * @param string $message
      * @param string $status
+     * @param string $token
      * @return JsonResponse
      */
-    private function sendResponse($data, $statusCode, $message, $status): JsonResponse
+    private function sendSuccessResponse(string $message, string $status, string $token): JsonResponse
     {
         return response()->json([
-            'data' => $data,
-            'status' => $status,
+            'status' => '200',
+            'status_code' => $status,
             'message' => $message,
-        ], $statusCode);
+            'data' => [
+                'token' => $token,
+            ],
+        ], 200);
+    }
+
+    /**
+     * Format the error response structure.
+     *
+     * @param string $error
+     * @param int $statusCode
+     * @param string|null $details
+     * @return JsonResponse
+     */
+    private function sendErrorResponse(string $error, int $statusCode, string $details = null): JsonResponse
+    {
+        $response = [
+            'status' => (string) $statusCode,
+            'status_code' => 'error',
+            'message' => $error,
+        ];
+
+        if ($details) {
+            $response['details'] = $details;
+        }
+
+        return response()->json($response, $statusCode);
     }
 }
