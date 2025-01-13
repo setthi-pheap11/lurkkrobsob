@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
-    libonig-dev \  # ✅ Added this line to fix the error
+    libonig-dev \  # ✅ Correct placement to fix mbstring error
     locales \
     zip \
     jpegoptim optipng pngquant gifsicle \
