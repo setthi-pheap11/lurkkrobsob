@@ -1,4 +1,4 @@
-# Use official PHP image with Composer
+# Use official PHP image
 FROM php:8.2-fpm
 
 # Install system dependencies
@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
+    libonig-dev \  # ✅ Added this line to fix the error
     locales \
     zip \
     jpegoptim optipng pngquant gifsicle \
