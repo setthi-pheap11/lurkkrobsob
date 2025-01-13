@@ -7,11 +7,10 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
-    libonig-dev \  # ✅ Correct placement to fix mbstring error
-    locales \
+    libonig-dev \ 
     zip \
     jpegoptim optipng pngquant gifsicle \
-    vim unzip git curl libpq-dev
+    vim unzip git curl libpq-dev locales
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd
