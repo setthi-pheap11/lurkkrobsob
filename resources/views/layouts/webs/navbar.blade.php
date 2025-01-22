@@ -38,8 +38,6 @@ $categories = DB::table('categories')->where('active', 1)->get();
       {{translate('Hello', 'សួស្ដី', )}}
 
 
-
-      
     </div>
   </div>
 </nav>
