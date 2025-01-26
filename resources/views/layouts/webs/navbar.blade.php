@@ -57,11 +57,11 @@ $categories = DB::table('categories')->where('active', 1)->get();
         </div>
         <div class="cont-rigth top-info w-50">
           <div class="d-flex justify-content-end align-items-center gap-2 w-100">
-            <div onclick="showContainer('sellerinstruction-container')" id="sellerinstruction"
+            <a id="sellerinstruction" href="{{route('dashboard')}}"
               class="menu-item d-flex gap-2">
               <i class="fa-solid fa-id-card fs-5 c-A96AE6"></i>
-              <span>Seller Register</span>
-            </div>
+              <span>Seller Account</span>
+            </a>
             <line></line>
             <div onclick="showContainer('myAcount-container')" id="myAcount" class="menu-item d-flex gap-2"
               data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -72,7 +72,7 @@ $categories = DB::table('categories')->where('active', 1)->get();
             <div class="top-language has-child">
               <a href="#" class="language-selected d-flex gap-2 align-items-center">
                 <i class="fa-solid fa-earth-americas fs-6 c-A96AE6"></i>
-                <span id="_lang_used">English</span>
+                <span id="_lang_used">{{translate('English', 'ខ្មែរ', )}}</span>
                 <i class="fa-solid fa-chevron-down"></i>
               </a>
               <ul class="sub-menu-top">
@@ -101,9 +101,6 @@ $categories = DB::table('categories')->where('active', 1)->get();
               <ul class="sub-menu-top">
                 <li class="bg-A96AE6 text-white">
                   <a href="#"><span class="fs-6">$</span>USD</a>
-                </li>
-                <li>
-                  <a href="#"><span class="fs-5">៛</span>Real</a>
                 </li>
               </ul>
             </div>
@@ -134,6 +131,14 @@ $categories = DB::table('categories')->where('active', 1)->get();
                 <span class="">{{__('lb.Home')}}</span>
               </div>
             </div>
+            @foreach($categories as $menu)
+            <div>
+              <a class="menu-item {{request()->id == $menu->id ? 'bg-warning' : ''}} " href="{{route('article_by_category', [$menu->name, $menu->id])}}">
+                <span class="menu-item">{{translate($menu->name, $menu->name_kh??null)}}</span>
+              </a>
+            </div>
+            @endforeach
+
             <!-- <div>
               <div onclick="showContainer('fashion-container')" id="fashion" class="menu-item">
                 <span class="menu-item">Fashion</span>
@@ -154,7 +159,7 @@ $categories = DB::table('categories')->where('active', 1)->get();
                 <span class="menu-item">Food</span>
               </div>
             </div> -->
-            <div>
+            <div class="d-none">
               <div onclick="showContainer('software-container')" id="software" class="menu-item">
                 <span class="menu-item">Software</span>
               </div>

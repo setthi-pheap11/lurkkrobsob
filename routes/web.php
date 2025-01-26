@@ -13,8 +13,6 @@ Route::get('/switch-lang/{locale}', [App\Http\Controllers\WebController::class, 
 
 
 
-
-
 // admin
 Auth::routes(['register' => true]);
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
@@ -27,7 +25,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
     Route::get('/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('user.delete')->middleware('checkUserType');
     Route::post('/user/save', [App\Http\Controllers\UserController::class, 'save'])->name('user.save')->middleware('checkUserType');
     Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update')->middleware('checkUserType');
-
 
      // category 
      Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category.index')->middleware(['checkUserType']);
@@ -53,7 +50,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
     Route::post('/product/save', [App\Http\Controllers\ProductController::class, 'save'])->name('product.save');
     Route::post('/product/update', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
         
-
     // pos 
     Route::get('/pos-order', [App\Http\Controllers\OrderController::class, 'index'])->name('order.index');
     Route::post('order/save', [App\Http\Controllers\OrderController::class, 'addToCart'])->name('order.save_cart');
