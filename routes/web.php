@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function(){
 //     return view('welcome');
 // });
+Route::get('/test-api', [App\Http\Controllers\Api\ApiController::class, 'index'])->name('iedex');
 Route::get('/', [App\Http\Controllers\WebController::class, 'home'])->name('home');
 Route::get('/article/detail/{id}', [App\Http\Controllers\WebController::class, 'detail'])->name('article_detail');
 Route::get('/article/{name}/{id}', [App\Http\Controllers\WebController::class, 'articleByCategory'])->name('article_by_category');
