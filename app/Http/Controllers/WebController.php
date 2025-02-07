@@ -36,7 +36,7 @@ class WebController extends Controller
             ->where('active', 1)
             ->where('is_publish', 1)
             ->where('category_id', $id)
-            ->paginate(4);
+            ->paginate(2);
         $data['name'] = $name;
         return view('website.article_by_category', $data);
     }
